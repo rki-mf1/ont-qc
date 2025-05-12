@@ -55,7 +55,7 @@ $ nextflow run scripts/ont-qc/main.nf \
 # optional parameters for the pipeline
 # given examples are defaults loaded from nextflow.config
 #
-# optional --krakendb kraken2_20240112 \
+# optional --krakendb /path/to/kraken2_DB \
 # optional --chopper_args " -q 20 -l 500 "
 
 ###
@@ -72,9 +72,9 @@ $ nextflow run scripts/ont-qc/main.nf \
 
 `--samplesheet` - comma separated input file with [sample,fwd_read,rev_read,raw_folder]
 
-`--krakendb` - define kraken database
+`--krakendb` - path to Kraken2 database
 
-`--outdir` - define output folder
+`--outdir` - path to output folder
 
 `--chopper_args` - set params for Chopper
 
@@ -82,7 +82,7 @@ additional paramters transferred to Nextflow
 
 `-c` - config file for Nextflow run
 
-`-profile` - recommended options are rki_slurm,rki_mamba
+`-profile` - recommended options include singularity
 
 `-stub` - run test run
 
