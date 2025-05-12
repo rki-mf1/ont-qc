@@ -1,0 +1,6 @@
+title: "Long read (ONT) Quality Control (QC)"
+subtitle: "RKI BI-Support ONT QC Report"
+intro_text: "This QC Report summarises results from quality control with NanoStats and FastQC before and after filtering 
+              with Chopper according to length and quality of the reads, and from a preliminary 
+              taxonomic classification with Kraken2"
+report_comment: "This report is automatically generated as part of a QC pipeline and SOP."
