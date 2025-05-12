@@ -23,6 +23,9 @@ The pipeline needs
 - output directory
 - Kraken2 DB (default see nextflow.config)
 
+Download your Kraken2 DB from https://benlangmead.github.io/aws-indexes/k2
+For example, Standard-8, the Standard with DB (Refeq archaea, bacteria, viral, plasmid, human1, UniVec_Core) capped at 8 GB.
+
 ## Samplesheet format
 
 The samplesheet must be a comma separated file with headers 
@@ -35,7 +38,7 @@ sample,raw_read,raw_folder
 
 ```
 [${YOUR_PROJECT}/scripts]
-git clone https://bitbucket.rki.local/scm/bbap/i008_trappek_ontqc.git
+git clone https://github.com/rki-mf1/ont-qc.git
 ```
 
 ## Example call
