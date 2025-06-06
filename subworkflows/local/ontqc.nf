@@ -3,6 +3,7 @@
 **************************/
 // Taxonomic classification
 include { KRAKEN2_KRAKEN2 } from '../../modules/nf-core/kraken2/kraken2/main'
+include { KRAKEN2_KRAKEN2 as KRAKEN2_CHOPPED } from '../../modules/nf-core/kraken2/kraken2/main'
 include { KRAKENTOOLS_KREPORT2KRONA } from '../../modules/nf-core/krakentools/kreport2krona/main'
 include { KRONA_KTIMPORTTEXT } from '../../modules/nf-core/krona/ktimporttext/main'
 //Read QC
@@ -68,6 +69,7 @@ workflow ONTQC {
     // OUTPUT: classification report
     // CALL: KRAKEN2_KRAKEN2(tuple val(meta), path(reads), krakendb, save_output_fastqs, save_reads_assignment)
     ch_kraken = KRAKEN2_KRAKEN2(ch_infiles, ch_krakendb, false, false)
+    ch_kraken_chopped = KRAKEN2_CHOPPED(ch_trimmed.fastq, ch_krakendb, false, false)
     ch_versions = ch_versions.mix(ch_kraken.versions.first())
 
     // Krona plots of classification
@@ -94,8 +96,8 @@ workflow ONTQC {
     ch_nanoplot_chopped = NANOPLOT_CHOPPED(ch_trimmed.fastq)
 
     ch_collated_versions = Channel.value('software_versions:')
-                                  .concat(ch_versions.unique().map { version -> myProcessVersionsFromYAML(version) })
-                                  .collectFile(name: 'software_versions.yaml', storeDir: "${ch_outdir}/pipeline_info", newLine: true, sort: 'index')
+                                .concat(ch_versions.unique().map { version -> myProcessVersionsFromYAML(version) })
+                                .collectFile(name: 'software_versions.yaml', storeDir: "${ch_outdir}/pipeline_info", newLine: true, sort: 'index')
 
     
     // multiQC
@@ -112,6 +114,8 @@ workflow ONTQC {
     // Kraken
     ch_multiqc_files = ch_multiqc_files.mix(
         ch_kraken.report.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(
+        ch_kraken_chopped.report.collect{it[1]}.ifEmpty([]))
     // Nanoplot raw and chopped
     ch_multiqc_files = ch_multiqc_files.mix(
         ch_nanoplot_raw.txt.collect{it[1]}.ifEmpty([]))
@@ -124,6 +128,6 @@ workflow ONTQC {
     //ch_multiqc_files = ch_multiqc_files.mix(
      //   ch_collated_versions)
 
-    ch_multiqc = MULTIQC(ch_multiqc_files.collect(), ch_multiqc_config, ch_collated_versions, [])
+    ch_multiqc = MULTIQC(ch_multiqc_files.collect(), ch_multiqc_config, ch_collated_versions, [], [], [])
 
 }
