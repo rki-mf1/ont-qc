@@ -4,3 +4,12 @@ intro_text: "This QC Report summarises results from quality control with NanoSta
               with Chopper according to length and quality of the reads, and from a preliminary 
               taxonomic classification with Kraken2"
 report_comment: "This report is automatically generated as part of a QC pipeline and SOP."
+show_hide_buttons:
+  - Raw
+  - Chopped
+show_hide_mode:
+  - show
+  - show
+show_hide_patterns:
+  - _raw
+  - _chopped
