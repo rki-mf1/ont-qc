@@ -1,3 +1,8 @@
+# Nanopore Quality Control
+## Scope
+
+Quality control (QC) of ONT FASTQ data with read trimming and preliminary taxonomic classification
+
 # Quick start
 
 The pipeline needs 
@@ -6,6 +11,9 @@ The pipeline needs
 - config file
 - output directory
 - Kraken2 DB (default see nextflow.config)
+
+Download your Kraken2 DB from https://benlangmead.github.io/aws-indexes/k2
+For example, Standard-8, the Standard with DB (Refeq archaea, bacteria, viral, plasmid, human1, UniVec_Core) capped at 8 GB.
 
 ## Samplesheet format
 
@@ -20,26 +28,25 @@ sample,raw_read,raw_folder
 Retrieve code via 
 
 ```
-hpc-login02[/scratch/projekte/MF1_BI-Support/${YOUR_PROJECT}/scripts]
-git clone https://bitbucket.rki.local/scm/bbap/i008_trappek_ontqc.git
+[${YOUR_PROJECT}/scripts]
+git clone https://github.com/rki-mf1/ont-qc.git
 ```
 
 ## Example call
 
 ```{bash}
-hpc-login02[/scratch/projekte/MF1_BI-Support/${YOUR_PROJECT}]
-$ nextflow run scripts/i008_trappek_ontqc/main.nf \
---samplesheet analyses/samplesheet.csv \
---outdir /scratch/projekte/MF1_BI-Support/${YOUR_PROJECT}/analyses \
---with-conda \
--profile rki_slurm,rki_mamba \
--c scripts/i008_trappek_ontqc/nextflow.config \
+[${YOUR_PROJECT}]
+$ nextflow run scripts/ont-qc/main.nf \
+--samplesheet samplesheet.csv \
+--outdir ${YOUR_PROJECT}/analyses \
+-profile slurm,singularity \
+-c scripts/ont-qc/nextflow.config \
 
 ###
 # optional parameters for the pipeline
 # given examples are defaults loaded from nextflow.config
 #
-# optional --krakendb /scratch/databases/kraken2_20240112/ \
+# optional --krakendb /path/to/kraken2_DB \
 # optional --chopper_args " -q 20 -l 500 "
 
 ###
@@ -62,14 +69,15 @@ $ nextflow run scripts/i008_trappek_ontqc/main.nf \
 
 `--chopper_args` - set params for Chopper
 
-additional paramters transferred to Nextflow
+additional parameters transferred to Nextflow
 
 `-c` - config file for Nextflow run
 
-`-profile` - recommended options are rki_slurm,rki_mamba
+`-profile` - choose e.g. singularity vs. mamba (if you use mama, add the --with-conda statement to the call)
 
 `-stub` - run test run
 
 `-resume` - continue process from last interrupt
+
 
 `-with-report` - emit a report on run time efficiency
