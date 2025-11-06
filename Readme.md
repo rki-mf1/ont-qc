@@ -78,7 +78,7 @@ $ nextflow run scripts/ont-qc/main.nf \
 
 `--chopper_args` - set params for Chopper
 
-additional paramters transferred to Nextflow
+additional parameters transferred to Nextflow
 
 `-c` - config file for Nextflow run
 
@@ -89,3 +89,4 @@ additional paramters transferred to Nextflow
 `-resume` - continue process from last interrupt
 
 `-with-report` - emit a report on run time efficiency
+
