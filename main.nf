@@ -2,10 +2,10 @@
 * CALL
 **************************/
 
-// (/scratch/trappek/nextflow_env) trappek@hpc-login02:/scratch/projekte/MF1_BI-Support/I008_TrappeK_ONTQC/analyses$ 
-// nextflow run ../scripts/i008_trappek_ontqc/main.nf \
+// (nextflow_env) $ 
+// nextflow run main.nf \
 // --samplesheet samplesheet.txt
-// --krakendb /scratch/databases/kraken2_20240112/ \
+// --krakendb kraken2_20240112/ \
 
 /************************** 
 * WORKFLOW
@@ -28,4 +28,5 @@ workflow {
 
 
     ONTQC(ch_infiles, params.krakendb, params.outdir, params.multiqc_config)
+
 }
