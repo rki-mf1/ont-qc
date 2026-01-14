@@ -32,5 +32,5 @@ general_stats_columns:
       percent_duplicates:
       percent_gc:
 table_columns_visible:
-   FASTQC:
+    FASTQC:
       median_sequence_length: False
