@@ -14,12 +14,20 @@ MF1 regularly uses Nanopore (ONT, MinION) sequencing methods for all kinds of pr
 - MultiQC collects all QC informationen of all processed samples in one QC report
 
 
+# Install
+
+```
+[${YOUR_PROJECT}/scripts]
+git clone https://github.com/rki-mf1/ont-qc.git
+```
+
+
 # Quick start
 
 The pipeline needs 
 
 - samplesheet
-- config file
+- config file (nextflow.config included in this repository)
 - output directory
 - Kraken2 DB (default see nextflow.config)
 
@@ -28,17 +36,16 @@ For example, Standard-8, the Standard with DB (Refeq archaea, bacteria, viral, p
 
 ## Samplesheet format
 
-The samplesheet must be a comma separated file with headers 
+Create a samplesheet with a sample name and the absolute path to every sample. The samplesheet must be a comma separated file with the following headers 
 
 ```
 sample,raw_read,raw_folder
+sample01,sample01.fastq.gz,/path/to/fastq/
 ```
-
-# Install
-
-```
-[${YOUR_PROJECT}/scripts]
-git clone https://github.com/rki-mf1/ont-qc.git
+You can use the createSamplesheet.R script that comes with the ONT QC Pipeline
+```{bash}
+[${YOUR_PROJECT}]
+Rscript scripts/ont-qc/createSamplesheet.R -f /path/to/fastq/ -o analyses/samplesheet.csv
 ```
 
 ## Example call
@@ -56,6 +63,7 @@ $ nextflow run scripts/ont-qc/main.nf \
 # given examples are defaults loaded from nextflow.config
 #
 # optional --krakendb /path/to/kraken2_DB \
+# optional --kraken2_memory 250.GB \
 # optional --chopper_args " -q 20 -l 500 "
 
 ###
@@ -74,6 +82,8 @@ $ nextflow run scripts/ont-qc/main.nf \
 
 `--krakendb` - path to Kraken2 database
 
+`--kraken2_memory` - available memory resource for Kraken2 database
+
 `--outdir` - path to output folder
 
 `--chopper_args` - set params for Chopper
@@ -90,3 +100,4 @@ additional parameters transferred to Nextflow
 
 `-with-report` - emit a report on run time efficiency
 
+Resource parameters for other tools within this pipeline can be adjusted in the `conf/modules.config`
