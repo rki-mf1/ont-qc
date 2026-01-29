@@ -7,12 +7,18 @@ report_comment: "This report is automatically generated as part of a QC pipeline
 show_hide_buttons:
   - Raw
   - Chopped
+  - Pass
+  - Fail
 show_hide_mode:
+  - show
+  - show
   - show
   - show
 show_hide_patterns:
   - _raw
   - _chopped
+  - _pass_
+  - _fail_
 remove_sections:
   - fastqc_sequence_length_distribution
 general_stats_columns:
